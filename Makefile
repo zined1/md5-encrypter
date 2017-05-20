@@ -6,8 +6,7 @@ all:
 	$(CC) $(CFLAGS) $(LDFLAGS) $(OBJS) -o $(NAME)
 
 check:
-	./test/check.py
-
+	./test/check.py ${ARGS}
 clean:
 	rm md5encrypter
 
