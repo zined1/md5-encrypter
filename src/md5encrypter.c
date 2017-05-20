@@ -2,15 +2,12 @@
 
 void md5_encrypt(char *str)
 {
-  uint32_t V[] = { v[0] , v[1], v[2], v[3] };
   uint32_t f = 0;
   uint32_t g = 0;
   size_t len_str = strlen(str);
   int len = 0;
   for(int i = (len_str * 8) + 1; len % 512 != 448; i++)
-    {
-      len = i;
-    }
+    len = i;
   len /= 8; 
   char *msg = (char *)calloc(len + 64, 1);
   if (!msg)
@@ -19,9 +16,12 @@ void md5_encrypt(char *str)
   msg[len_str] = (char)0x80;
   uint32_t bits_len = 8 * len_str;
   memcpy(msg + len, &bits_len, 4);
+
   for(int i = 0; i < len; i += 64) 
     {
+      uint32_t V[] = { v[0] , v[1], v[2], v[3] };
       uint32_t *s = (uint32_t *) (msg + i);
+
       for (int j = 0; j < 64; j++)
 	{
 	  if (j <= 15)
@@ -50,9 +50,11 @@ void md5_encrypt(char *str)
 	  V[1] += ROTATION((V[0] + f + k[j] + s[g]), r[j]);
 	  V[0] = tmp;
 	}
+      
       for (int j = 0; j < 4; j++)
 	v[j] += V[j];
     }
+  
   if (msg)
     free(msg);
 }
@@ -73,6 +75,7 @@ int main(int argc, char *argv[])
       for (int j = 0; j < 4; j++)
 	printf("%2.2x", p[j]);
     }
+  
   puts("\n");
   return 1; 
 }
