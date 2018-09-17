@@ -10,7 +10,7 @@ ___
 Execution
 ---------
 
-Firs, launch make at the root of the project:
+First, at the root of the project:
 
     > make
     
